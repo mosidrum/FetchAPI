@@ -25,8 +25,11 @@ const renderPosts = (post) => {
 
 //get request - GET
 //method: GET
-fetch(url).then(res => res.json().then (data =>
-  renderPosts(data)
+fetch(url).then(res => res.json().then (data => {
+  const firstTwo = data.slice(0, 2);
+  // console.log(firstTwo);
+  renderPosts(firstTwo)
+  }
 ));
 
 //create post
@@ -35,13 +38,20 @@ fetch(url).then(res => res.json().then (data =>
 addPostForm.addEventListener('submit', (e) => {
   e.preventDefault();
   console.log(titleValue.value);
-  fetch(url, {
+  fetch('https://jsonplaceholder.typicode.com/posts', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
     },
     body: JSON.stringify({
-
+      title: titleValue.value,
+      body: bodyValue.value
     })
+  })
+  .then(res => res.json())
+  .then(data => {
+    const dataArr = [];
+    dataArr.push(data);
+    renderPosts(dataArr)
   })
 })
