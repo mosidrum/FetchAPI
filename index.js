@@ -25,19 +25,16 @@ const renderPosts = (post) => {
 
 //get request - GET
 //method: GET
-fetch(url).then(res => res.json().then (data => {
-  const firstTwo = data.slice(0, 2);
-  // console.log(firstTwo);
-  renderPosts(firstTwo)
-  }
-));
+fetch(url)
+.then(res => res.json())
+.then (data => renderPosts(data));
 
 //create post
 //method: POST
 
 addPostForm.addEventListener('submit', (e) => {
   e.preventDefault();
-  console.log(titleValue.value);
+  // console.log(titleValue.value);
   fetch('https://jsonplaceholder.typicode.com/posts', {
     method: 'POST',
     headers: {
@@ -50,8 +47,10 @@ addPostForm.addEventListener('submit', (e) => {
   })
   .then(res => res.json())
   .then(data => {
+    console.log(data);
     const dataArr = [];
     dataArr.push(data);
+    console.log(data);
     renderPosts(dataArr)
   })
 })
